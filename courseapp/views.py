@@ -256,25 +256,25 @@ def read_sort(request):
 
 
 
-def home9(request):
-    t_all = Title.objects.all()
-    t_all2 = TCategory.objects.filter(level=2)
-    paginator = Paginator(t_all,5)
-    if request.method == "GET":
-        present_all = paginator.page(1)
-        return render(request,'courseapp/index.html',{'present_all':present_all})
-    if request.is_ajax():
-        page = request.GET.get("page")
-        try:
-            present_all = paginator.page(page)
-        except PageNotAnInteger:
-            present_all = paginator.page(1)
-        except InvalidPage:
-            present_all = paginator.page(paginator.num_pages)
-        present_list = list(present_all.object_list.values())
-        result = {}
-    return JsonResponse({"t_all": list(t_all),"t_all2":t_all2},json_dumps_params={"default": my_default})
-
+# def home9(request):
+#     t_all = Title.objects.all()
+#     t_all2 = TCategory.objects.filter(level=2)
+#     paginator = Paginator(t_all,5)
+#     if request.method == "GET":
+#         present_all = paginator.page(1)
+#         return render(request,'courseapp/index.html',{'present_all':present_all})
+#     if request.is_ajax():
+#         page = request.GET.get("page")
+#         try:
+#             present_all = paginator.page(page)
+#         except PageNotAnInteger:
+#             present_all = paginator.page(1)
+#         except InvalidPage:
+#             present_all = paginator.page(paginator.num_pages)
+#         present_list = list(present_all.object_list.values())
+#         result = {}
+#     return JsonResponse({"t_all": list(t_all),"t_all2":t_all2},json_dumps_params={"default": my_default})
+#
 
 
 
