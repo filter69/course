@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>百知Python课程管理系统-忘记密码</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	<script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+{#	<script type="text/javascript" src="/static/js/register.js"></script>#}
+	<style>
+		.reg_form {
+			margin:65px 0 0 30px;
+		}
+	</style>
+{#    <script src="/static/js/jquery-3.3.1.min.js"></script>#}
+    <script>
+        function checkname() {
+            var name = document.getElementById('user_name')
+            var hint1 = document.getElementById('hint1')
+            hint1.style.display = 'none'
+            if(name.value===''){
+                hint1.innerHTML = '密码不能为空'
+                hint1.style.display = "inline"
+            }
+        }
+        
+        
+        function checkema() {
+            var ema = document.getElementById('email')
+            var hint2 = document.getElementById('hint2')
+            hint2.style.display = 'none'
+            if(ema.value===''){
+                hint2.style.display='inline'
+                hint2.innerHTML='邮箱不能为空'
+            }
+        }
+        
+        
+        function checkbtn() {
+            var error_tip = document.getElementsByClassName('error_tip')
+            var form = document.getElementById('form')
+            var name = document.getElementsByName('user_name')[0]
+            var email = document.getElementsByName('email')[0]
+            console.log(name)
+            console.log(email)
+            checkname()
+            checkema()
+            var inline = 'inline'
+            for(var i=0;i<=error_tip.length-1;i++){
+                if(error_tip[i].style.display===inline){
+                    return
+                }
+            }
+            $.ajax({
+                type:"post",
+                url: "{% url 'user:forget_verify' %}",
+                data:"csrfmiddlewaretoken={{ csrf_token }}&name="+name.value+"&email="+email.value,
+                success:function (resp) {
+                    var res = resp.split('!')
+                    if(res[0]==='ok'){
+                        location.href = "{% url 'user:reset_pwd' %}?name="+name.value
+                    }else {
+                        alert('账号或邮箱错误')
+                    }
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+	<div class="register_con">
+		<div class="l_con fl">
+			<a class="reg_logo"><img src="/static/images/bz_logo.gif"></a>
+			<div class="reg_slogan">站在时代风口 · 抢占人工智能</div>
+			<div class="reg_banner"></div>
+		</div>
+
+		<div class="r_con fr">
+			<div class="reg_title clearfix">
+				<h1>密码找回</h1>
+			</div>
+			<div class="reg_form clearfix">
+				<form action="" method="post" id="form">
+                    {% csrf_token %}
+				<ul>
+					<li>
+						<label>用户名:</label>
+						<input type="text" name="user_name" id="user_name" onblur="checkname()">
+                        <span class="error_tip" id="hint1">提示信息</span>
+					</li>
+					<li>
+						<label>邮箱:</label>
+						<input type="text" name="email" id="email" onblur="checkema()">
+						<span class="error_tip" id="hint2">提示信息</span>
+					</li>
+
+					<li class="reg_sub">
+						<input type="button" value="提交" name="" onclick="checkbtn()">
+					</li>
+				</ul>
+				</form>
+			</div>
+
+		</div>
+
+	</div>
+	<div class="footer no-mp">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>
+		</div>
+		<p>CopyRight © 2020 北京百知教育科技有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+
+</body>
+</html>

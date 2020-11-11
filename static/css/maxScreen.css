@@ -1,0 +1,44 @@
+.wrap {
+	margin: 45px auto 50px;
+}
+
+.wrap li {
+	display: block;
+	float: left;
+	width: 33.33%;
+	border-bottom: 1px solid #ccc;
+}
+
+.wrap li .left-pic {
+	float: left;
+	width: 25%;
+}
+
+.wrap li .left-pic img {
+	width: 100%;
+}
+
+.wrap li .right-info {
+	float: left;
+	width: 75%;
+	padding-left: 10px;
+	box-sizing: border-box;
+}
+
+.wrap li .right-info  .sc-title {
+	font-size: 14px;
+}
+
+.wrap li .right-info .sc-marketPrice {
+	font-size: 12px;
+	color: #ccc;
+	text-decoration: line-through;
+}
+
+.wrap li .right-info .sc-price {
+	font-size: 16px;
+	color: red;
+}
+
+
+

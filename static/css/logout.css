@@ -1,0 +1,45 @@
+.modal-free {
+    display: block;
+
+}
+.modal-header {
+    border-bottom: 0;
+}
+.modal-header h4 {
+    font-size: 30px;
+    color: #a27440;
+}
+.modal-body {
+    font-size: 20px;
+}
+.modal-footer {
+    border-top: 0;
+}
+.my-btn {
+    background-color: #a27440;
+    color: white;
+}
+.my-btn:hover {
+    background-color: #ec971f;
+    border-color: #d58512;
+    color: #fff;
+}
+.content-logout {
+    height: 500px;
+}
+.modal-dialog {
+    margin: 100px auto;
+    background-color: rgba(0,0,0,.2);
+}
+.modal-content {
+    background-color: ghostwhite;
+}
+.login_top{
+    height:76px;
+    margin:0 auto;
+    background-color: #fff;
+}
+.login_logo{
+    display:block;
+    height:76px;
+}

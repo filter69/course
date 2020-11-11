@@ -1,0 +1,64 @@
+body {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;;
+    font-size: 160%;
+}
+/*表格样式*/
+.table > tbody > tr > td {
+    vertical-align: center;
+    /*text-align: right;*/
+}
+
+.panel > .table-bordered {
+    border: 1px solid #ddd;
+}
+.my-inp {
+    display: block;
+    width: 230px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.my-sel {
+    display: inline-block;
+    width: 200px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.panel > .table {
+    margin-bottom: 20px;
+}
+/*底部按钮样式*/
+.my-btn {
+    background-color: #a27440;
+    color: white;
+}
+.my-btn:hover {
+    background-color: #ec971f;
+    border-color: #d58512;
+    color: #fff;
+}
+.my-btn > a {
+    color: white;
+    text-decoration: none;
+}
+.btn-toolbar {
+    margin-left: 400px;
+}
+
+.left-side-bar h5 a {
+    font-size: 120%
+}
+

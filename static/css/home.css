@@ -1,0 +1,74 @@
+body {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;;
+    font-size: 160%;
+}
+
+/*主体页头*/
+.page-header {
+    margin-top: -8px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+.table-bordered > thead > tr > th, .table > tbody > tr > td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.base-color {
+    background-color: #a27440;
+    color: white;
+}
+
+.left-side-bar {
+    background-color: #fff;
+    height: 500px;
+    border-radius: 4px;
+    padding-top: 15px
+}
+
+.left-side-bar > div {
+    background-color: #fff;
+}
+
+.course-python, .course-h5, .course-back {
+    padding-left: 15px;
+    height: 40px;
+    line-height: 40px;
+    background-color: lightgray;
+}
+
+.right-side {
+    height: 500px;
+}
+
+.right-side-content {
+    height: 500px;
+}
+
+.pagitor-manager {
+    margin-top: -11px;
+}
+
+.btn-warning {
+    background-color: #a27440;
+}
+
+.left-side-bar .course-h5 a, .left-side-bar .course-python a, .left-side-bar .course-back a {
+    color: black;
+}
+
+.left-side-bar a:active {
+    color:blue;
+}
+
+.add-course {
+    margin-left: 10px;
+}
+
+/*增加课程按钮*/
+.btn:hover {
+    color: #fff;
+    background-color: #ec971f;
+    border-color: #d58512;
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/bodymain.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/logout.css"/>
+    <script src="/static/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/static/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+    <title>百知课程后台管理系统-退出</title>
+</head>
+<body>
+<div class="login_top clearfix">
+    <a href="../index.html" class="login_logo" style="font-size: 30px;">
+        <img src="/static/images/bz_logo.gif">
+        <span style="color:black;font-size: 15px;">站在时代风口，抢占人工智能</span>
+    </a>
+</div>
+<div class="content-logout"></div>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h4><span class="glyphicon glyphicon-heart-empty glyphicon"></span> 关注我们</h4>
+                        <p>最受欢迎的管理平台</p>
+                        <p><a href="#" class="ic_df"> 新浪微博</a></p>
+                        <p><a href="#" class="ic_weichat"> 官方微信</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h4><span class="glyphicon glyphicon-king"> 开发平台</span></h4>
+                        <p>加入开发平台，尊享会员福利，成为资深程序猿</p>
+                        <p class="p_idea"><a href="http://www.baizhibest.com"
+                                             class="btn btn-default btn-lg idea">我要开发</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <div class="caption">
+                        <h4><span class="glyphicon glyphicon-phone-alt"></span> 关于我们</h4>
+                        <p>欢迎反馈宝贵意见</p>
+                        <p class="p_idea"><a href="http://www.baizhibest.com"
+                                             class="btn btn-default btn-lg idea">意见反馈</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 cp_info">
+                <div class="no-mp">
+                    <p>CopyRight © 2020 北京百知教育科技有限公司 All Rights Reserved</p>
+                    <p>电话：010-****888 京ICP备*******8号</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="box cotainer">
+    <div class="modal modal-free" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="myModalLabel">成功退出</h4>
+                </div>
+                <div class="modal-body">
+                    感谢您今天在本站花费了一些宝贵时间！
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default my-btn" data-dismiss="modal">关闭窗口</button>
+                    <a href="login.html" class="btn btn-default my-btn">重新登录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(function () {
+        $(".modal-header .close").click(function () {
+            $("#myModal").modal("hide");
+        });
+    });
+
+</script>
+</body>
+</html>

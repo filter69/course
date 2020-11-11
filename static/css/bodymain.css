@@ -1,0 +1,93 @@
+/*导航条样式*/
+.navbar-default .navbar-nav > li > a:hover,.navbar-default .navbar-nav > li > a:focus,.navbar-default .navbar-brand:hover {
+    color: white;
+}
+.navbar {
+    border: 0;
+    border-bottom: 1px solid transparent;
+    border-color: #e7e7e7;
+}
+.navbar-default {
+    background-color: transparent;
+}
+.navbar-default .navbar-brand,.navbar-default .navbar-nav > li > a {
+    color: white;
+}
+
+/*底部样式*/
+.ic_df {
+    display: inline-block;
+    height: 35px;
+    line-height: 40px;
+    padding-left: 45px;
+    color: #333;
+    background: url("../images/common.png") no-repeat 0 -309px;
+}
+.ic_weichat {
+    display: inline-block;
+    height: 35px;
+    line-height: 40px;
+    padding-left: 45px;
+    color: #333;
+    background: url("../images/common.png") no-repeat 0 -350px;
+}
+.caption {
+    text-align: center;
+}
+.thumbnail {
+    border: 0;
+    background-color: transparent;
+}
+.idea {
+    font-size: 14px;
+}
+.p_idea {
+    margin-top: 30px;
+}
+.cp_info {
+    text-align: center;
+}
+.footer {
+    background-color: #f8f8f8;
+    border-top: 2px solid #804a4a;
+    margin: 30px 0 0 0;
+    font-family: 'Microsoft Yahei';
+    font-size: 13px;
+    color: #666;
+}
+/*页头样式*/
+.page-header {
+    margin-top: -8px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+/*主体样式*/
+body {
+    /*background-color: rgba(0,10,10,0.5);*/
+    background: url("../images/8.jpg");
+
+}
+
+/*侧边栏样式*/
+.left-side-bar {
+    /*background-color: rgba(0,10,10,0.2);*/
+    background-color: #fff;
+    height: 500px;
+    border-radius: 4px;
+    padding-top: 15px;
+}
+.left-side-bar > div {
+    background-color: #fff;
+}
+.course-python,.course-h5,.course-back {
+    padding-left: 15px;
+}
+
+.right-side-content {
+    height: 500px;
+}
+
+.left-side-bar .course-h5 a, .left-side-bar .course-python a,.left-side-bar .course-back a{
+    color: black;
+}

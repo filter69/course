@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>百知Python课程管理系统-登录</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <script>
+        function checkusername() {
+            var name = document.getElementsByName('username')[0]
+            var error1 = document.getElementById('error1')
+            error1.style.display = 'none'
+            var regex = /^[\u4E00-\u9FA5]{2,10}$/
+            var result = regex.test(name.value)
+            if(name.value ===""){
+                error1.innerHTML = '用户名不能为空'
+                error1.style.display = "inline"
+            }else if(!result){
+                error1.innerHTML = '请输入2-10位汉字'
+                error1.style.display = "inline"
+            }
+        }
+
+        function checkpwd() {
+            var pwd = document.getElementsByName('pwd')[0]
+            var error2 = document.getElementById('error2')
+            error2.style.display = 'none'
+            if(pwd.value ===""){
+                error2.innerHTML = '密码不能为空'
+                error2.style.display = "inline"
+            }
+        }
+
+
+        function checkbtn() {
+            var error1 = document.getElementById('error1')
+            var error2 = document.getElementById('error1')
+            checkusername()
+            checkpwd()
+            var inline = "inline"
+            if(error1.style.display===inline){
+                console.log(999)
+                return
+            }else if(error2.style.display===inline){
+                console.log(111)
+                return
+            }
+            $.post(
+                "{% url 'user:login_verify' %}",
+                $('#form').serialize(),
+                function (resp) {
+                    if(resp==='账号或密码错误'){
+                        alert('账号或密码错误')
+                    }
+                    else if(resp==='登录成功'){
+                        var res = "{% url 'courseapp:home' %}"
+                        window.location.href= res
+                    }
+                    else if(resp==='账号或密码不能为空'){
+                        alert('账号或密码不能为空')
+                    }else if(resp==="账号未激活"){
+                        var activate = window.confirm("账号未激活!是否向管理员发送激活邮件？")
+                        if(activate){
+                            var name = document.getElementsByName('username')[0]
+                            $.ajax({
+                                type:"get",
+                                url:"{% url 'user:email' %}",
+                                data:"username="+name.value,
+                                success:function (res) {
+                                    if(res==='邮件发送成功'){
+                                        alert('邮件发送成功')
+                                    }else if(res==='邮件发送失败'){
+                                        alert('邮件发送失败')
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
+            )
+        }
+    </script>
+</head>
+<body>
+	<div class="login_top clearfix">
+		<a href="../index.html" class="login_logo" style="font-size: 30px;">
+            <img src="/static/images/bz_logo.gif">
+            <span style="color:black;font-size: 15px;">站在时代风口，抢占人工智能</span>
+        </a>
+	</div>
+
+	<div class="login_form_bg">
+		<div class="login_form_wrap clearfix">
+			<div class="login_banner fl"></div>
+			<div class="slogan fl">百知教育 · 课程系统</div>
+			<div class="login_form fr">
+				<div class="login_title clearfix">
+					<h1>用户登录</h1>
+					<a href="{% url 'user:register' %}">立即注册</a>
+				</div>
+				<div class="form_input">
+					<form action="" id="form"  method="post">
+                        {% csrf_token %}
+						<input type="text" name="username" class="name_input" placeholder="请输入用户名" onblur="checkusername()">
+						<div class="user_error" id= "error1">输入错误</div>
+{#						<div class="user_error">输入错误</div>#}
+						<input type="password" name="pwd" class="pass_input" placeholder="请输入密码" onblur="checkpwd()">
+						<div class="pwd_error" id= "error2">输入错误</div>
+						<div class="more_input clearfix">
+							<input type="checkbox" name="num" value=1>
+							<label>记住用户名</label>
+							<a href="{% url 'user:forget' %}">忘记密码</a>
+						</div>
+						<input type="button" name="" value="登录" class="input_submit" onclick="checkbtn()">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer no-mp">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>
+		</div>
+		<p>CopyRight © 2020 北京百知教育科技有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+
+</body>
+</html>

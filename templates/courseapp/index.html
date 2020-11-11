@@ -1,0 +1,452 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <!--<meta name="viewport"-->
+          <!--content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>-->
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/static/css/bodymain.css">
+    <link rel="stylesheet" href="/static/css/home.css">
+    <title>百知课程后台管理系统-首页
+    </title>
+
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <style>
+        #accordion{
+            overflow:auto;
+        }
+
+        .a {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #e1e2e3;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            line-height: 30px;
+            border-radius:7px;
+            text-decoration:none;
+        }
+
+        .b{
+             border: 0;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            line-height: 30px;
+            border-radius:7px;
+            text-decoration:none;
+        }
+        .c{
+            border:  1px solid #e1e2e3;
+            width: 70px;
+            height: 30px;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            line-height: 30px;
+            border-radius:7px;
+            text-decoration:none;
+        }
+        a { text-decoration: none;}
+    </style>
+
+    <script>
+        function del(t) {
+            del = confirm('是否确认删除？')
+            if(del){
+                $.ajax({
+                    type:"post",
+                    url:"{% url 'courseapp:delete' %}",
+                    {#async : false,#}
+                    data:"csrfmiddlewaretoken={{ csrf_token }}&del_id="+t+"&num="+{{ page.number }},
+                    {#data:"csrfmiddlewaretoken={{ csrf_token }}&del_id="+t+"&id="+{{ id }}+"&level="{{ level }},#}
+                    success:function (resp) {
+                        var res = resp.split('!')
+                        if(res[0]==='删除成功'){
+                            location.href = "{% url 'courseapp:home' %}?num="+res[1]
+                            {#location.href = "{% url 'courseapp:home' %}"#}
+                        }
+                        {#alert('删除成功')#}
+                    }
+                })
+            }
+        }
+    </script>
+
+
+    <script>
+
+        function rm() {
+            var tbody = document.getElementById("tbody")
+            var children = tbody.children
+            for(i=children.length-1;i>=0;i--){
+                tbody.removeChild(children[i])
+            }
+        }
+
+
+        var read = true
+        function checkread() {
+            if (read){
+                read = false
+            }else {
+                read = true
+            }
+            var tbody = document.getElementById("tbody")
+            rm()
+            $.ajax({
+                type:'get',
+                url:"{% url 'courseapp:read_sort'%}",
+                data:"read="+read+"&level={{ level }}&id={{ id }}&num={{ page.number}}",
+                success:function (resp) {
+                    console.log(resp)
+                    var list = resp['title']
+                    var res = resp['course_type']
+                    var str = ''
+                        for(i=0;i<list.length;i++) {
+                            str += "<tr>"
+                            str += "<td>" + "<input type=\"checkbox\" class=\"checks\"/>"+ "</td>"
+                            str += "<td>" + list[i].id + "</td>"
+                            str += "<td>"+"<a href=\"{% url 'courseapp:update' %}?id={{ cou.id  }}\"/>" + list[i].title +"</a>"+"</td>"
+                            for(j=0;j<res.length;j++){
+                                console.log(111)
+                                if(res[j].id===list[i].cate_id){
+                                    console.log(999)
+                                    str += "<td>" + res[j].titles + "</td>"
+                                }
+                            }
+                            str += "<td>" + list[i].publish_time+ "</td>"
+                            str += "<td>" + list[i].count + "</td>"
+                            str += "<td>" + "<button class=\"btn btn-warning\" onclick=\"del({{ cou.id }})\">删除</button>" + "</td>"
+                            str += "</tr>"
+                            tbody.innerHTML = str
+                        }
+                }
+            })
+
+        }
+
+
+
+        var time = true
+        function checktime() {
+            if (time){
+                time = false
+            }else {
+                time = true
+            }
+            var tbody = document.getElementById("tbody")
+            rm()
+            $.ajax({
+                type:'get',
+                url:"{% url 'courseapp:read_sort'%}",
+                {#data:"time="+time+"&level={{ level }}&id={{ id }}&num={{ page.number}}",#}
+                data:"time="+time,
+                success:function (resp) {
+                    console.log(resp)
+                    var list = resp['title']
+                    var res = resp['course_type']
+                    {#JSON.parse(resp)["users"]#}
+                    console.log(res)
+                    var str = ''
+                        for(i=0;i<list.length;i++) {
+                            str += "<tr>"
+                            str += "<td>" + "<input type=\"checkbox\" class=\"checks\"/>"+ "</td>"
+                            str += "<td>" + list[i].id + "</td>"
+                            str += "<td>"+"<a href=\"{% url 'courseapp:update' %}?id={{ cou.id  }}\"/>" + list[i].title +"</a>"+"</td>"
+                            for(j=0;j<res.length;j++){
+                                console.log(111)
+                                if(res[j].id===list[i].cate_id){
+                                    str += "<td>" + res[j].titles + "</td>"
+                                }
+                            }
+                            str += "<td>" + list[i].publish_time+ "</td>"
+                            str += "<td>" + list[i].count + "</td>"
+                            str += "<td>" + "<button class=\"btn btn-warning\" onclick=\"del({{ cou.id }})\">删除</button>" + "</td>"
+                            str += "</tr>"
+                            tbody.innerHTML = str
+                        }
+                }
+            })
+
+        }
+    </script>
+
+    <script>
+        function quite() {
+            $.ajax({
+                type:"get",
+                url:"{% url 'user:quit' %}",
+                success:function (res) {
+                    if (res==='删除成功') {
+                        location.href = "{% url 'user:quite' %}"
+                    }
+                }
+            })
+        }
+    </script>
+
+    <script>
+        function checknum(t) {
+            var num = {{ page.number }}
+            var a = document.getElementsByTagName("a")
+            for(i=0;i<=a.length;i++){
+                if(a[i].innerHTML==num){
+                    a[i].style.backgroundColor = '#4E6EF2'
+                    a[i].style.color = 'white'
+                }
+            }
+        }
+
+        function checkmouse(t) {
+            t.style.backgroundColor = '#4E6EF2'
+            t.style.color = 'white'
+        }
+
+        function checkmouse1(t) {
+            var num = {{ page.number }}
+            if(t.innerHTML!=num){
+                t.style.backgroundColor = 'white'
+                t.style.color = 'black'
+            }
+        }
+    </script>
+    
+</head>
+<body  onload="checknum()">
+<!--导航-->
+<nav class="navbar navbar-default nav-self">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">百知课程后台管理系统</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="" role="button">{{ username }} <span class="glyphicon glyphicon-log-in"></span></a>
+                </li>
+                <li>
+                    <a href="{% url 'user:quit' %}">退出 <span class="glyphicon glyphicon-log-out"></span></a>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="">
+                </div>
+                <div class="btn-group" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</nav>
+<!--内容面板-->
+<div class="container-fluid">
+    <div class="row">
+        <!-- Nav tabs -->
+        <div class="panel-group col-sm-2 left-side-bar" id="accordion" role="tablist" aria-multiselectable="true">
+            <div>
+                <div class="panel panel-default">
+                  <div class="panel-heading left-side-header">百知课程</div>
+                   {% for couse_name in course %}
+                        <div class="course-python"><a href="{% url 'courseapp:home1'%}?level={{ couse_name.level }}&id={{ couse_name.id }}">{{ couse_name.titles }}</a></div>
+                       {% for couse_type_name in course_type %}
+                           {% if couse_type_name.parnt_elevel == couse_name.id %}
+                                <div class="list-group-item" ><a href="{% url 'courseapp:home1'%}?level={{ couse_type_name.level }}&id={{ couse_type_name.id }}">{{ couse_type_name.titles }}</a></div>
+                           {% endif %}
+                       {% endfor %}
+                   {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Tab panes 详情展示面板 -->
+        <div class="tab-content col-sm-10 right-side">
+
+            <div class="panel panel-default right-side-content">
+                <div class="page-header">
+                  <h3>博客文章</h3>
+                </div>
+                <div class="panel-body caret_parent">
+                    <button  class="btn btn-default" onclick="checkread()">阅读量 <span class="glyphicon glyphicon-arrow-down"></span></button>
+                    <button   class="btn btn-default" onclick="checktime()">发布时间 <span class="glyphicon glyphicon-arrow-down"></span></button>
+{#                    <a href="#" class="btn btn-default">阅读量 <span class="glyphicon glyphicon-arrow-down"></span></a>#}
+{#                    <a href="#" class="btn btn-default">发布时间 <span class="glyphicon glyphicon-arrow-down"></span></a>#}
+                    <a href="{% url 'courseapp:course_add_title' %}" class="btn pull-right base-color add-course"><span class="glyphicon glyphicon-plus"></span> 增加文章</a>
+                    <a href="{% url 'courseapp:course_add' %}" class="btn pull-right base-color"><span class="glyphicon glyphicon-plus"></span> 增加课程/分类</a>
+                </div>
+                <div class="panel-heading">文章列表</div>
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"/></th>
+                            <th>ID</th>
+                            <th>文章标题</th>
+                            <th>所属课程</th>
+                            <th>发布日期</th>
+                            <th>阅读量</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                        {% for title in page.object_list  %}
+                            <tr>
+                                <td><input type="checkbox" class="checks"/></td>
+                                <td>
+                                   {{forloop.counter}}
+                                </td>
+                                <td>
+                                    <a href="{% url 'courseapp:update' %}?id={{ title.id }}">{{ title.title }}</a>
+                                </td>
+                                <td>
+                                    {% for couse_type_name in course_type %}
+                                        {% if couse_type_name.id == title.cate_id  %}
+                                            {{ couse_type_name.titles }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {{title.publish_time|date:'Y-m-d H:i:s'}}
+                                </td>
+                                <td>{{ title.count }}</td>
+                                <td>
+                                <button class="btn btn-warning" onclick="del({{ title.id }})">删除</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+{#                <nav aria-label="Page navigation" class="pull-right pagitor-manager">#}
+                    <p align="center">
+                    {% if page.has_previous %}
+                            <strong ><a class="c" style="text-decoration: none; color: black;" href="{% url 'courseapp:home' %}?num={{page.previous_page_number}}" onmouseover="checkmouse(this)" onmouseout="checkmouse1(this)"><<上一页</a></strong>
+
+                        {% endif %}
+
+                        {% for n in page.paginator.page_range %}
+                            {% if page.num == n %}
+                                <strong ><a class="b" style="text-decoration: none; color: black;" href="{% url 'courseapp:home' %}?num={{n}}" onmouseover="checkmouse(this)" onmouseout="checkmouse1(this)">{{ n }}</a></strong>
+                            {% else %}
+                                <strong ><a class="a" style="text-decoration: none; color: black;"  href="{% url 'courseapp:home' %}?num={{n}}" onmouseover="checkmouse(this)" onmouseout="checkmouse1(this)">{{ n }}</a></strong>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page.has_next %}
+                            <strong ><a class="c" style="text-decoration: none; color: black;" href="{% url 'courseapp:home' %}?num={{page.next_page_number}}" onmouseover="checkmouse(this)" onmouseout="checkmouse1(this)">下一页>></a></strong>
+                        {% endif %}
+                    </p>
+{#                    <ul class="pagination">#}
+{#                        <li>#}
+{#                            <a href="#" aria-label="Previous">#}
+{#                                <span aria-hidden="true">&laquo;</span>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                        <li><a href="#">1</a></li>#}
+{#                        <li><a href="#">2</a></li>#}
+{#                        <li><a href="#">3</a></li>#}
+{#                        <li><a href="#">4</a></li>#}
+{#                        <li><a href="#">5</a></li>#}
+{#                        <li>#}
+{#                            <a href="#" aria-label="Next">#}
+{#                                <span aria-hidden="true">&raquo;</span>#}
+{#                            </a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </nav>#}
+            </div>
+            <!--分页显示-->
+        </div>
+
+    </div>
+
+</div>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                  <div class="caption">
+                    <h4><span class="glyphicon glyphicon-heart-empty glyphicon"></span> 关注我们</h4>
+                    <p>最受欢迎的管理平台</p>
+                    <p><a href="#" class="ic_df"> 新浪微博</a> </p>
+                    <p><a href="#" class="ic_weichat"> 官方微信</a> </p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                  <div class="caption">
+                    <h4><span class="glyphicon glyphicon-king"> 开发平台</span> </h4>
+                    <p>加入开发平台，尊享会员福利，成为资深程序猿</p>
+                    <p class="p_idea"><a href="http://www.baizhibest.com"  class="btn btn-default btn-lg idea">我要开发</a></p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                  <div class="caption">
+                    <h4><span class="glyphicon glyphicon-phone-alt"></span> 关于我们</h4>
+                    <p>欢迎反馈宝贵意见</p>
+                    <p class="p_idea"><a href="http://www.baizhibest.com"  class="btn btn-default btn-lg idea">意见反馈</a></p>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 cp_info">
+                <div class="no-mp">
+                    <p>CopyRight © 2020 北京百知教育科技有限公司 All Rights Reserved</p>
+                    <p>电话：010-****888    京ICP备*******8号</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+
+</body>
+</html>
+
+{##}
+{#<script>#}
+{#    function f() {#}
+{#        $.ajax({#}
+{#            type:'get',#}
+{#            url:"{% url 'courseapp:home9' %}",#}
+{#            success:function (resp) {#}
+{#                var t_all = resp['t_all']#}
+{#                var t_all2 = resp['t_all2']#}
+{#                var str = ''#}
+{#                for(i=0;i<t_all.length;i++) {#}
+{#                    str += "<tr>"#}
+{#                    str += "<td>" + "<input type=\"checkbox\" class=\"checks\"/>"+ "</td>"#}
+{#                    str += "<td>" + t_all[i].id + "</td>"#}
+{#                    str += "<td>"+"<a href=\"{% url 'courseapp:update' %}?id={{ cou.id  }}\"/>" + t_all[i].title +"</a>"+"</td>"#}
+{#                    for(j=0;j<res.length;j++){#}
+{#                        console.log(111)#}
+{#                        if(t_all2[j].id===t_all[i].cate_id){#}
+{#                            str += "<td>" + t_all2[j].titles + "</td>"#}
+{#                        }#}
+{#                    }#}
+{#                    str += "<td>" + t_all[i].publish_time+ "</td>"#}
+{#                    str += "<td>" + t_all[i].count + "</td>"#}
+{#                    str += "<td>" + "<button class=\"btn btn-warning\" onclick=\"del({{ cou.id }})\">删除</button>" + "</td>"#}
+{#                    str += "</tr>"#}
+{#                    tbody.innerHTML = str#}
+{#                }#}
+{#            }#}
+{#        })#}
+{#    }#}
+{#</script>#}
+{##}
