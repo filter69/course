@@ -17,6 +17,6 @@ urlpatterns = [
     path('update/',views.update,name='update'),
     path('updata_title/',views.updata_title,name='updata_title'),
     path('read_sort/',views.read_sort,name='read_sort'),
-    # path('home9/',views.home9,name='home9'),
+    path('home9/',views.home9,name='home9'),
 
 ]
